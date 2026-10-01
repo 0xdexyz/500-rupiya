@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0c141d" />
+    <title>Hearing Sensitivity | Hearing Care &amp; Hearing Aids</title>
+    <meta
+      name="description"
+      content="Explore personalised hearing care, hearing assessments, hearing-aid consultation, fitting and modern hearing solutions at Hearing Sensitivity."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Hearing Sensitivity" />
+    <meta property="og:title" content="Hearing Sensitivity | Hearing Care &amp; Hearing Aids" />
+    <meta
+      property="og:description"
+      content="Explore personalised hearing care, hearing assessments, hearing-aid consultation, fitting and modern hearing solutions at Hearing Sensitivity."
+    />
+    <meta property="og:image" content="/images/phonak-infinio-charging-case.jpg" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" as="image" href="/images/phonak-infinio-ultra-ric.jpg" />
+    <script>
+      // apply the saved theme before first paint so dark mode does not flash
+      try {
+        if (localStorage.getItem('hs.theme') === 'dark') document.documentElement.dataset.theme = 'dark';
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
