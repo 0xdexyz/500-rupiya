@@ -22,7 +22,7 @@ export function useReveal(root: RefObject<HTMLElement | null>, deps: unknown[] =
           }
         }
       },
-      { rootMargin: '0px 0px -12% 0px', threshold: 0.01 },
+      { rootMargin: '0px 0px -6% 0px', threshold: 0 },
     );
     targets.forEach((t) => io.observe(t));
     return () => io.disconnect();

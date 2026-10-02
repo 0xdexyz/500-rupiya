@@ -1133,3 +1133,11 @@ html.has-dot * {
     transition-delay: 0s !important;
   }
 }
+
+/* phones: photos never wait on a scroll trigger to appear */
+@media (max-width: 900px) {
+  img[data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

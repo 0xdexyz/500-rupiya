@@ -27,7 +27,7 @@ export default function Photo({
       alt={m.alt}
       width={m.w}
       height={m.h}
-      loading={eager ? 'eager' : 'lazy'}
+      loading="eager"
       decoding="async"
       fetchPriority={eager ? 'high' : undefined}
       draggable={false}
