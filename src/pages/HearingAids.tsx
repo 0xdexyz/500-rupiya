@@ -25,8 +25,8 @@ export default function HearingAids() {
 
       <section className="page-hero has-visual" data-tone="dark">
         <div className="hero-visual">
-          <div className="hero-stage" data-reveal>
-            <Photo id={hero.image} eager className="blend-screen" />
+          <div className="hero-stage">
+            <Photo id={hero.image} eager reveal className="blend-multiply" />
           </div>
         </div>
         <i className="hero-plug" data-spine="start" />

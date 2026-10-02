@@ -270,7 +270,7 @@
 }
 [data-theme='dark'] .icon-badge {
   background: rgba(21, 151, 166, 0.18);
-  color: #6fcdd7;
+  color: var(--brand-deep);
 }
 
 /* services and branches sliding past */
@@ -630,17 +630,26 @@
   padding: clamp(28px, 5vw, 80px);
   border-radius: clamp(24px, 3vw, 36px);
   overflow: hidden;
-  color: var(--on-inverse);
+  color: var(--ink);
+  /* a white card with a soft green glow; the product photo's white ground multiplies into it */
   background:
-    radial-gradient(ellipse 52% 72% at 76% 50%, rgba(21, 151, 166, 0.26), transparent 72%),
-    var(--inverse);
+    radial-gradient(ellipse 52% 72% at 76% 50%, rgba(13, 182, 52, 0.1), transparent 72%),
+    var(--card);
   box-shadow: var(--shadow-lift);
 }
 .featured-card .label {
-  color: var(--on-inverse-muted);
+  color: var(--muted);
 }
 .featured-visual {
   aspect-ratio: 1;
+}
+/* the dark theme has no light surface to multiply onto, so the photo sits on a white panel */
+[data-theme='dark'] .featured-visual .blend-multiply {
+  mix-blend-mode: normal;
+  background: #fff;
+  border-radius: 24px;
+  padding: 4%;
+  box-sizing: border-box;
 }
 .steps-pills {
   display: flex;
@@ -654,7 +663,8 @@
   gap: 10px;
   padding: 11px 18px;
   border-radius: 999px;
-  border: 1.5px solid rgba(243, 241, 236, 0.28);
+  border: 1.5px solid var(--hair);
+  background: var(--card);
   font-size: 16px;
 }
 .steps-pills .micro {
@@ -731,14 +741,14 @@
   padding: clamp(24px, 2.4vw, 34px);
   border-radius: 20px;
   background: var(--bg);
-  color: #fff;
+  color: var(--ink);
 }
 .reason:nth-child(4),
 .reason:nth-child(5) {
   grid-column: span 3;
 }
 .reason .micro {
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--muted);
 }
 .reason .h-card {
   margin: 44px 0 12px;
@@ -746,7 +756,7 @@
 .reason p:last-child {
   font-size: 16px;
   line-height: 1.58;
-  color: rgba(255, 255, 255, 0.88);
+  color: var(--ink-soft, var(--ink));
 }
 
 /* ---------- branches ---------- */
@@ -1031,9 +1041,9 @@
   border-color: var(--ink);
 }
 .chip.is-on {
-  background: var(--ink);
-  border-color: var(--ink);
-  color: var(--canvas);
+  background: var(--bar-solid);
+  border-color: var(--bar-solid);
+  color: #fff;
 }
 .chip-count {
   font-family: var(--font-mono);
@@ -1170,7 +1180,7 @@
   text-underline-offset: 4px;
 }
 .contact-item a:hover {
-  color: #6fcdd7;
+  color: var(--brand-deep);
 }
 .contact-branches {
   display: flex;
@@ -1518,8 +1528,8 @@
     padding: 28px 22px 24px;
     gap: 20px;
     background:
-      radial-gradient(ellipse 90% 30% at 50% 86%, rgba(21, 151, 166, 0.26), transparent 72%),
-      var(--inverse);
+      radial-gradient(ellipse 90% 30% at 50% 86%, rgba(13, 182, 52, 0.1), transparent 72%),
+      var(--card);
   }
   .featured-visual {
     width: 100%;

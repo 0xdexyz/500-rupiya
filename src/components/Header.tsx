@@ -6,7 +6,7 @@ import { Pill, Socials } from './Bits';
 import { Icon } from './Icons';
 import { Logo } from './Marks';
 
-const NUM_TONES = ['var(--accent)', 'var(--blue)', 'var(--sand)', 'var(--accent-soft)', 'var(--slate-light)', 'var(--stone-400)'];
+const NUM_TONES = ['var(--brand-deep)', 'var(--blue)', 'var(--sand)', 'var(--accent)', 'var(--slate)', 'var(--accent-deep)'];
 
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -111,7 +111,7 @@ export default function Header() {
         </nav>
         <div className="menu-foot">
           <div className="menu-book">
-            <Pill to={site.bookHref} variant="light">
+            <Pill to={site.bookHref}>
               Book Appointment
             </Pill>
           </div>

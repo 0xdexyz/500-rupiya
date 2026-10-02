@@ -163,8 +163,8 @@ export const categories: Category[] = [
 /** Products pictured in the supplied photography. Names follow the branding visible in each
     image. They are examples of hearing technology, not a price list or a stock list. */
 export const products: { id: string; name: string; category: string; image: MediaId }[] = [
-  { id: 'infinio-ultra-ric', name: 'Phonak Infinio Ultra', category: 'ric', image: 'infinioUltraRic' },
-  { id: 'infinio-ultra-ite', name: 'Phonak Infinio Ultra', category: 'ite', image: 'infinioUltraIte' },
+  { id: 'infinio-ultra-ric', name: 'Phonak Infinio Ultra', category: 'ric', image: 'infinioCase' },
+  { id: 'infinio-ultra-ite', name: 'Phonak Infinio Ultra', category: 'ite', image: 'infinioCase' },
   { id: 'infinio-case', name: 'Phonak Infinio with charging case', category: 'rechargeable', image: 'infinioCase' },
   { id: 'phonak-lineup', name: 'Phonak hearing aids', category: 'ric', image: 'lineup' },
   { id: 'signia-silver', name: 'Signia receiver-in-canal', category: 'ric', image: 'signiaSilver' },
@@ -214,7 +214,7 @@ export const home = {
     heading: 'Modern Technology.\nPersonalised Care.',
     body: 'Modern hearing technology can be compact, discreet and designed for everyday life. Our team helps you understand your options and find a solution suited to your hearing needs.',
     cta: 'Explore Hearing Aids',
-    image: 'infinioUltraRic' as MediaId,
+    image: 'infinioCase' as MediaId,
   },
   life: {
     label: 'Everyday life',
@@ -298,7 +298,7 @@ export const hearingAidsPage = {
     label: 'Hearing aids',
     heading: 'Advanced Hearing\nSolutions',
     body: 'Explore modern hearing-aid solutions designed around comfort, clarity and everyday life.',
-    image: 'infinioUltraIte' as MediaId,
+    image: 'infinioCase' as MediaId,
   },
   styles: { label: 'Hearing aid styles', all: 'All styles' },
   note: 'Hearing aids shown are examples of modern hearing technology. Our team will explain which options suit your hearing needs.',

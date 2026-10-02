@@ -20,12 +20,12 @@
   --slate-light: #9aa9bb;
   --sand: #c4985a;
 
-  /* benefit card fills */
-  --tone-navy: #172638;
-  --tone-teal: #0b6873;
-  --tone-slate: #3c4c60;
-  --tone-ocean: #1d5a85;
-  --tone-ink: #26313d;
+  /* benefit card fills: soft tints with ordinary dark text (were dark fills) */
+  --tone-navy: #e9f0f8;
+  --tone-teal: #e3f3f4;
+  --tone-slate: #eef1f5;
+  --tone-ocean: #e5eff8;
+  --tone-ink: #eaf4ec;
 
   --canvas: var(--stone-100);
   --card: var(--stone-50);
@@ -35,10 +35,13 @@
   --muted: var(--stone-700);
   --faint: var(--stone-600);
   --hair: var(--stone-300);
-  --inverse: #0c141d;
-  --inverse-card: #16212c;
-  --on-inverse: #f3f1ec;
-  --on-inverse-muted: rgba(243, 241, 236, 0.76);
+  /* "Alt" surfaces: page headers, footer, menu and contrast sections. These were dark navy;
+     the user asked for something light and simple, so they are now a soft mint tint drawn
+     from the logo's green, with ordinary dark text. (The dark theme below keeps them dark.) */
+  --inverse: #ecf5ee;
+  --inverse-card: #ffffff;
+  --on-inverse: var(--ink);
+  --on-inverse-muted: var(--muted);
   --link: var(--accent-deep);
   --shadow-soft: 0 1px 2px rgba(20, 32, 48, 0.04), 0 10px 30px -16px rgba(20, 32, 48, 0.16);
   --shadow-lift: 0 2px 6px rgba(20, 32, 48, 0.05), 0 26px 48px -22px rgba(20, 32, 48, 0.3);
@@ -71,6 +74,11 @@
   --hair: #2a3642;
   --inverse: #080d13;
   --inverse-card: #131c26;
+  --tone-navy: #172638;
+  --tone-teal: #0b4f58;
+  --tone-slate: #2d3a4a;
+  --tone-ocean: #173f5d;
+  --tone-ink: #1d3325;
   --link: #6fcdd7;
   --bar: linear-gradient(90deg, #0a3517 0%, #0b3d1a 55%, #0e4a20 100%);
   --bar-solid: #0b3d1a;
@@ -384,19 +392,19 @@ mark.hl {
 .pill:hover .pill-arrow .arrow:last-child {
   translate: 0 0;
 }
-/* auto: dark on light surfaces, light in the dark theme */
+/* auto: the logo's green on light surfaces (white text, 5.6:1), light in the dark theme */
 .pill-auto,
 .pill-dark {
-  background: var(--stone-900);
-  color: var(--stone-50);
+  background: var(--bar-solid);
+  color: #fff;
 }
 .pill-auto:hover,
 .pill-dark:hover {
-  background: var(--stone-800);
+  background: #016c12;
 }
 .pill-auto .pill-arrow,
 .pill-dark .pill-arrow {
-  color: var(--accent-soft);
+  color: #c4f5d0;
 }
 [data-theme='dark'] .pill-auto,
 .pill-light {
@@ -749,15 +757,16 @@ html.has-dot * {
   transform: rotate(-45deg);
 }
 
+/* a white panel that opens below the green bar, so the bar and its buttons stay in view */
 .menu {
   --social-bg: var(--menu-bg);
-  --menu-bg: #0c141d;
+  --menu-bg: #ffffff;
   position: fixed;
-  inset: 0;
+  inset: var(--bar-h) 0 0 0;
   z-index: 60;
   display: grid;
-  grid-template-rows: auto 1fr auto;
-  padding: 18px var(--margin) max(28px, env(safe-area-inset-bottom));
+  grid-template-rows: 1fr auto;
+  padding: 8px var(--margin) max(28px, env(safe-area-inset-bottom));
   background: var(--menu-bg);
   color: var(--on-inverse);
   overflow-y: auto;
@@ -771,10 +780,9 @@ html.has-dot * {
 [data-theme='dark'] .menu {
   --menu-bg: #080d13;
 }
+/* the bar above already shows the logo */
 .menu-top {
-  display: flex;
-  align-items: center;
-  height: 48px;
+  display: none;
 }
 .menu.is-open {
   clip-path: inset(0);
@@ -822,7 +830,7 @@ html.has-dot * {
   transform: translateX(10px);
 }
 .menu-link.active .menu-word {
-  color: var(--accent);
+  color: var(--bar-solid);
 }
 .menu-foot {
   display: flex;
@@ -837,7 +845,7 @@ html.has-dot * {
   opacity: 1;
 }
 .menu-foot .micro {
-  color: rgba(243, 241, 236, 0.6);
+  color: var(--faint);
   margin-bottom: 10px;
 }
 .menu-foot a {
@@ -868,8 +876,8 @@ html.has-dot * {
   margin-left: 2px;
   padding: 2px 8px;
   border-radius: 999px;
-  background: rgba(21, 151, 166, 0.22);
-  color: #6fcdd7;
+  background: rgba(13, 182, 52, 0.14);
+  color: var(--brand-deep);
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 500;
@@ -952,7 +960,7 @@ html.has-dot * {
   transition: translate 0.35s var(--ease-out);
 }
 .footer-book:hover {
-  background: #1b2835;
+  background: #f4fbf5;
 }
 .footer-book:hover .arrow {
   translate: 6px 0;
@@ -988,7 +996,7 @@ html.has-dot * {
   gap: 16px;
   margin-top: clamp(56px, 7vw, 96px);
   padding-top: 22px;
-  border-top: 1px solid rgba(243, 241, 236, 0.16);
+  border-top: 1px solid var(--hair);
   font-size: 14px;
   color: var(--on-inverse-muted);
 }

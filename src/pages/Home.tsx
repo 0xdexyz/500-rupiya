@@ -182,13 +182,13 @@ export default function Home() {
                 {featured.body}
               </p>
               <div className="hero-cta" data-reveal>
-                <Pill to="/hearing-aids" variant="light">
+                <Pill to="/hearing-aids">
                   {featured.cta}
                 </Pill>
               </div>
             </div>
             <div className="featured-visual">
-              <Photo id={featured.image} className="blend-screen" />
+              <Photo id={featured.image} className="blend-multiply" />
             </div>
           </div>
         </div>

@@ -30,7 +30,7 @@ export const Privacy = () => <Plain {...privacy} />;
 export const NotFound = () => (
   <Plain label="404" heading={'Page not\nfound'} body={['The page you were looking for is not here.']}>
     <div className="hero-cta" data-reveal>
-      <Pill to="/" variant="light">
+      <Pill to="/">
         Back to home
       </Pill>
     </div>
