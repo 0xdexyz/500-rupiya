@@ -8,35 +8,10 @@ import { Logo } from './Marks';
 
 const NUM_TONES = ['var(--accent)', 'var(--blue)', 'var(--sand)', 'var(--accent-soft)', 'var(--slate-light)', 'var(--stone-400)'];
 
-/** Which kind of section sits under the fixed buttons, so they can recolour. */
-function useToneUnderButton(pathname: string) {
-  const [tone, setTone] = useState('dark');
-  useEffect(() => {
-    const sections = document.querySelectorAll<HTMLElement>('[data-tone]');
-    const hits = new Map<Element, boolean>();
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => hits.set(e.target, e.isIntersecting));
-        // last section in document order that touches the band wins
-        let next = 'light';
-        sections.forEach((s) => {
-          if (hits.get(s)) next = s.dataset.tone || 'light';
-        });
-        setTone(next);
-      },
-      { rootMargin: '-34px 0px -95% 0px' },
-    );
-    sections.forEach((s) => io.observe(s));
-    return () => io.disconnect();
-  }, [pathname]);
-  return tone;
-}
-
 export default function Header() {
   const [open, setOpen] = useState(false);
   const { theme, toggle } = useTheme();
   const { pathname } = useLocation();
-  const tone = useToneUnderButton(pathname);
   const panelRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -84,7 +59,7 @@ export default function Header() {
         <Socials className="masthead-social" size={18} />
       </header>
 
-      <Link to={site.bookHref} className="book-btn" data-tone={open ? 'dark' : tone}>
+      <Link to={site.bookHref} className="book-btn">
         <Icon name="calendar" size={18} />
         <span>Book Appointment</span>
       </Link>
@@ -94,7 +69,6 @@ export default function Header() {
         <a
           className="call-btn"
           href={telHref(site.phones[0])}
-          data-tone={open ? 'dark' : tone}
           aria-label={`Call ${site.name} on ${site.phones[0]}`}
         >
           <Icon name="phone" size={20} />
@@ -104,7 +78,6 @@ export default function Header() {
       <button
         ref={buttonRef}
         className="menu-btn"
-        data-tone={open ? 'dark' : tone}
         aria-expanded={open}
         aria-controls="site-menu"
         aria-label={open ? 'Close menu' : 'Open menu'}
@@ -157,7 +130,7 @@ export default function Header() {
             </p>
           </div>
           {site.phones.length > 0 && (
-            <div>
+            <div className="menu-call">
               <p className="micro">Call us</p>
               <p className="menu-phones">
                 {site.phones.map((p, i) => (

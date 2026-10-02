@@ -8,15 +8,20 @@ export default function Photo({
   className = '',
   fit = 'contain',
   eager = false,
+  reveal = false,
 }: {
   id: MediaId;
   className?: string;
   fit?: 'contain' | 'cover';
   eager?: boolean;
+  /** Animate the image itself into view. Use this for blended images: a revealing wrapper
+      would isolate the blend from the background behind it. */
+  reveal?: boolean;
 }) {
   const m = media[id];
   return (
     <img
+      data-reveal={reveal ? '' : undefined}
       className={`photo fit-${fit} bg-${m.bg} ${className}`}
       src={m.src}
       alt={m.alt}

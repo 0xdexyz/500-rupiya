@@ -1,15 +1,20 @@
 import { site } from '../content';
 
-/* Brand mark: a listening ring with two sound arcs, drawn in the same line
-   language as the cable that runs down each page. */
-export function LogoMark({ size = 30 }: { size?: number }) {
+/* The Hearing Sensitivity badge: an ear, sound waves and two cupped hands. The master file is
+   logo/ in the project root; public/logo holds the small copies the site actually loads. */
+export function LogoMark({ size = 40 }: { size?: number }) {
   return (
-    <svg className="logo-mark" viewBox="0 0 32 32" width={size} height={size} aria-hidden="true">
-      <circle cx="11" cy="16" r="6.2" fill="none" style={{ stroke: 'var(--accent)' }} strokeWidth="3.2" />
-      <circle cx="11" cy="16" r="2" fill="currentColor" />
-      <path d="M20.2 9.8a8.8 8.8 0 0 1 0 12.4" fill="none" style={{ stroke: 'var(--accent)' }} strokeWidth="2.6" strokeLinecap="round" />
-      <path d="M24.6 5.8a14.4 14.4 0 0 1 0 20.4" fill="none" stroke="currentColor" strokeOpacity="0.55" strokeWidth="2.6" strokeLinecap="round" />
-    </svg>
+    <img
+      className="logo-mark"
+      src="/logo/logo-96.png"
+      srcSet="/logo/logo-96.png 96w, /logo/logo-192.png 192w"
+      sizes={`${size}px`}
+      width={size}
+      height={size}
+      alt=""
+      decoding="async"
+      draggable={false}
+    />
   );
 }
 

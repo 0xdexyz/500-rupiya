@@ -183,7 +183,12 @@ export const home = {
     body: 'Personalised hearing care and advanced hearing solutions, professionally fitted around your individual needs.',
     cta: 'Book an Appointment',
     secondary: 'Explore Hearing Solutions',
-    image: 'infinioUltraRic' as MediaId,
+    /* What fills the right of the first screen:
+       'photo'   a photograph from `image`, running to the edge of the screen and fading into the page
+       'product' a product cut-out from `image`, floating on the page (`shadow` adds a ground shadow) */
+    kind: 'photo' as 'photo' | 'product',
+    image: 'heroWearer' as MediaId,
+    shadow: false,
   },
   trust: { label: 'Why people come to us' },
   about: {
@@ -209,12 +214,14 @@ export const home = {
     heading: 'Modern Technology.\nPersonalised Care.',
     body: 'Modern hearing technology can be compact, discreet and designed for everyday life. Our team helps you understand your options and find a solution suited to your hearing needs.',
     cta: 'Explore Hearing Aids',
-    image: 'infinioCase' as MediaId,
+    image: 'infinioUltraRic' as MediaId,
   },
   life: {
     label: 'Everyday life',
     heading: 'Designed For\nReal Life',
     body: 'Modern hearing aids are designed to fit naturally into everyday routines. With the right technology, professional fitting and ongoing support, hearing care can become a comfortable part of daily life.',
+    /* large photograph, round close-up, and a product that fits the daily routine */
+    images: { main: 'held', round: 'inEar', side: 'signiaBlack' } as Record<'main' | 'round' | 'side', MediaId>,
   },
   why: { label: 'Why choose us', heading: 'Why Choose\nHearing Sensitivity' },
   branches: {

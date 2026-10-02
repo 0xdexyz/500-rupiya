@@ -35,12 +35,19 @@ export default function Home() {
       <Spine />
 
       {/* 01 hero */}
-      <section className="hero" data-tone="dark">
-        <div className="hero-visual">
-          <div className="hero-stage" data-reveal>
-            <Photo id={hero.image} eager className="blend-screen" />
+      <section className={`hero ${hero.kind === 'photo' ? 'has-photo' : ''}`} data-tone="light">
+        {hero.kind === 'photo' ? (
+          /* runs to the right edge of the screen and fades into the page behind the text */
+          <div className="hero-photo">
+            <Photo id={hero.image} eager reveal fit="cover" />
           </div>
-        </div>
+        ) : (
+          <div className="hero-visual">
+            <div className={`hero-stage ${hero.shadow ? 'has-shadow' : ''}`}>
+              <Photo id={hero.image} eager reveal className="blend-multiply" />
+            </div>
+          </div>
+        )}
         <i className="hero-plug" data-spine="start" />
         <div className="wrap hero-inner">
           <Label n={1}>{hero.label}</Label>
@@ -49,9 +56,7 @@ export default function Home() {
             {hero.body}
           </p>
           <div className="hero-cta" data-reveal>
-            <Pill to={site.bookHref} variant="light">
-              {hero.cta}
-            </Pill>
+            <Pill to={site.bookHref}>{hero.cta}</Pill>
             <Pill to="/hearing-aids" variant="ghost">
               {hero.secondary}
             </Pill>
@@ -165,23 +170,26 @@ export default function Home() {
       </section>
 
       {/* 06 featured product */}
-      <section className="section featured" data-tone="dark">
-        <div className="wrap featured-grid">
-          <div className="featured-text">
-            <Label n={6}>{featured.label}</Label>
-            <Lines text={featured.heading} className="h-lg" />
-            <span className="rule" data-reveal />
-            <p className="problem-body" data-reveal>
-              {featured.body}
-            </p>
-            <div className="hero-cta" data-reveal>
-              <Pill to="/hearing-aids" variant="light">
-                {featured.cta}
-              </Pill>
+      <section className="section featured-sec" data-tone="light">
+        <div className="wrap">
+          {/* one dark showcase card on the light page: the black product photograph blends into it */}
+          <div className="featured-card" data-reveal>
+            <div className="featured-text">
+              <Label n={6}>{featured.label}</Label>
+              <Lines text={featured.heading} className="h-lg" />
+              <span className="rule" data-reveal />
+              <p className="problem-body" data-reveal>
+                {featured.body}
+              </p>
+              <div className="hero-cta" data-reveal>
+                <Pill to="/hearing-aids" variant="light">
+                  {featured.cta}
+                </Pill>
+              </div>
             </div>
-          </div>
-          <div className="plinth featured-media" data-reveal>
-            <Photo id={featured.image} />
+            <div className="featured-visual">
+              <Photo id={featured.image} className="blend-screen" />
+            </div>
           </div>
         </div>
       </section>
@@ -199,13 +207,13 @@ export default function Home() {
           </div>
           <div className="life-grid">
             <figure className="life-main frame" data-reveal>
-              <Photo id="held" fit="cover" />
+              <Photo id={life.images.main} fit="cover" />
             </figure>
             <figure className="life-round frame" data-reveal style={{ '--d': '90ms' } as CSSProperties}>
-              <Photo id="inEar" fit="cover" />
+              <Photo id={life.images.round} fit="cover" />
             </figure>
             <figure className="life-side plinth" data-reveal style={{ '--d': '180ms' } as CSSProperties}>
-              <Photo id="signiaBlack" />
+              <Photo id={life.images.side} />
             </figure>
           </div>
         </div>

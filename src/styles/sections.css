@@ -1,12 +1,22 @@
 /* ---------- hero ---------- */
 .hero {
-  --vis-w: clamp(280px, min(40vw, calc(100svh - 200px)), 620px);
+  --vis-w: clamp(280px, min(40vw, calc(100svh - 200px)), 700px);
   position: relative;
   min-height: max(100svh, 640px);
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 120px 0 104px;
+  /* soft teal light behind the product and a cool wash in the top corner, fading into the page */
+  background:
+    radial-gradient(ellipse 54% 66% at 76% 46%, rgba(21, 151, 166, 0.17), transparent 72%),
+    radial-gradient(ellipse 46% 52% at 4% 0%, rgba(58, 123, 198, 0.09), transparent 70%),
+    linear-gradient(180deg, #fbfaf8 0%, var(--canvas) 100%);
+}
+[data-theme='dark'] .hero {
+  background:
+    radial-gradient(ellipse 54% 66% at 76% 46%, rgba(21, 151, 166, 0.22), transparent 72%),
+    var(--canvas);
 }
 .hero-inner {
   width: 100%;
@@ -15,26 +25,58 @@
 .hero-inner > * {
   max-width: min(calc(100% - var(--vis-w) - var(--margin)), 760px);
 }
-/* product photograph on the right, its black ground blended into the section */
+.hero-inner > .hero-h1 {
+  max-width: none;
+}
+/* Product photograph on the right. It is centred with `top`, not a transform: a transformed
+   ancestor would isolate the photo's blend from the hero background behind it. */
 .hero-visual {
   position: absolute;
   right: var(--margin);
-  top: 50%;
+  top: calc(50% - var(--vis-w) / 2);
   width: var(--vis-w);
   aspect-ratio: 1;
-  transform: translateY(-50%);
 }
 .hero-stage {
+  position: relative;
   width: 100%;
   height: 100%;
-  background: var(--inverse);
-  transition: opacity 1.4s var(--ease-out) 0.25s, transform 1.4s var(--ease-out) 0.25s;
 }
-.hero-stage[data-reveal] {
+/* a soft contact shadow, so a product rests on the page instead of floating in it */
+.hero-stage.has-shadow::before {
+  content: '';
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: -1.5%;
+  height: 6%;
+  background: radial-gradient(closest-side, rgba(20, 32, 48, 0.28), transparent);
+  filter: blur(5px);
+}
+.hero-stage.has-shadow .photo {
+  position: relative; /* paints after the shadow */
+}
+.hero-stage .photo[data-reveal] {
   transform: translateY(18px) scale(0.97);
+  transition:
+    opacity 1.4s var(--ease-out) 0.25s,
+    transform 1.4s var(--ease-out) 0.25s;
 }
-.hero-stage.is-in {
+.hero-stage .photo[data-reveal].is-in {
   transform: none;
+}
+/* the dark theme has no light surface to multiply onto, so the photo sits on a white panel */
+[data-theme='dark'] .hero-stage {
+  box-sizing: border-box;
+  padding: 4%;
+  border-radius: 28px;
+  background: #fff;
+}
+[data-theme='dark'] .hero-stage.has-shadow::before {
+  display: none;
+}
+[data-theme='dark'] .hero-stage .blend-multiply {
+  mix-blend-mode: normal;
 }
 /* the cable's ring sits just under the product, as if it were plugged in */
 .hero-plug {
@@ -42,12 +84,55 @@
   width: 80px;
   height: 80px;
   left: calc(100% - var(--margin) - var(--vis-w) / 2 - 40px);
-  top: calc(50% + var(--vis-w) * 0.47 - 40px);
+  top: calc(50% + var(--vis-w) / 2 + 12px);
   pointer-events: none;
 }
 .hero-plug-page {
   left: calc(82% - 40px);
   top: 132px;
+}
+
+/* ---- full-bleed photograph: runs to the screen edge and fades into the page ---- */
+.hero.has-photo {
+  /* the text column stays clear of the photo's solid part */
+  --vis-w: 42vw;
+}
+.hero-photo {
+  position: absolute;
+  top: var(--bar-h); /* starts below the green bar, so the bar never covers his head */
+  right: 0;
+  bottom: 0;
+  width: min(56vw, 1060px);
+  pointer-events: none;
+  /* fades in from the left, behind the text, and out at the bottom into the next section */
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 34%), linear-gradient(to top, transparent 0%, #000 16%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent 0%, #000 34%), linear-gradient(to top, transparent 0%, #000 16%);
+  mask-composite: intersect;
+}
+.hero-photo .photo {
+  object-position: 55% 30%;
+}
+.hero-photo .photo[data-reveal] {
+  transform: scale(1.04);
+  transition:
+    opacity 1.4s var(--ease-out) 0.15s,
+    transform 1.8s var(--ease-out) 0.15s;
+}
+.hero-photo .photo[data-reveal].is-in {
+  transform: none;
+}
+.hero.has-photo .hero-inner {
+  position: relative;
+  z-index: 1;
+}
+[data-theme='dark'] .hero-photo {
+  opacity: 0.9;
+}
+/* the cable starts where the first screen ends, between the text and the photo */
+.hero.has-photo .hero-plug {
+  left: calc(50% - 40px);
+  top: calc(100% - 48px);
 }
 .hero-h1 {
   position: relative;
@@ -55,6 +140,13 @@
   font-weight: 600;
   line-height: 0.98;
   letter-spacing: -0.037em;
+}
+/* Each of the two lines is written to fit on one line beside the photo. Without this, a
+   trailing full stop can wrap onto a line of its own on wide screens. */
+@media (min-width: 720px) {
+  .hero-h1 .line-in {
+    white-space: nowrap;
+  }
 }
 .hero-word {
   display: inline-block;
@@ -87,7 +179,7 @@
   max-width: min(34em, calc(100% - var(--vis-w) - var(--margin)));
   font-size: clamp(17px, 1.4vw, 21px);
   line-height: 1.6;
-  color: var(--on-inverse-muted);
+  color: var(--muted);
   --d: 0.25s;
 }
 .hero-cta {
@@ -349,11 +441,15 @@
   background: var(--ink);
   color: var(--canvas);
 }
+/* the centre of the diagram is the badge itself: it is already a circle, so no ring around it */
 .node-hub {
-  width: 76px;
-  height: 76px;
-  border: 3px solid var(--ink);
-  color: var(--ink);
+  width: 80px;
+  height: 80px;
+  background: none;
+}
+.node-hub .logo-mark {
+  width: 100%;
+  height: 100%;
 }
 .node-ring {
   border: 3px solid var(--c);
@@ -395,8 +491,8 @@
     height: 50px;
   }
   .node-hub {
-    width: 66px;
-    height: 66px;
+    width: 68px;
+    height: 68px;
   }
   .hub-targets .micro {
     font-size: 10.5px;
@@ -518,6 +614,34 @@
 .featured-wide {
   aspect-ratio: 4 / 3;
 }
+
+/* The home page's one dark moment: a showcase card on the light page. The black product
+   photograph is screened onto the card's own background, so it has no visible edge. */
+.featured-sec {
+  padding-block: 0;
+}
+.featured-card {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(28px, 5vw, 80px);
+  padding: clamp(28px, 5vw, 80px);
+  border-radius: clamp(24px, 3vw, 36px);
+  overflow: hidden;
+  color: var(--on-inverse);
+  background:
+    radial-gradient(ellipse 52% 72% at 76% 50%, rgba(21, 151, 166, 0.26), transparent 72%),
+    var(--inverse);
+  box-shadow: var(--shadow-lift);
+}
+.featured-card .label {
+  color: var(--on-inverse-muted);
+}
+.featured-visual {
+  aspect-ratio: 1;
+}
 .steps-pills {
   display: flex;
   flex-wrap: wrap;
@@ -549,7 +673,8 @@
 }
 .life-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr);
+  /* the big photograph takes what is left; the two small ones stack in a column that scales */
+  grid-template-columns: minmax(0, 1fr) clamp(240px, 24vw, 340px);
   grid-template-rows: auto auto;
   gap: var(--gutter);
   margin-top: clamp(48px, 6vw, 80px);
@@ -580,8 +705,6 @@
   inset: 0;
 }
 .life-round {
-  justify-self: center;
-  width: min(100%, 320px);
   aspect-ratio: 1;
   border-radius: 50%;
 }
@@ -589,8 +712,6 @@
   aspect-ratio: 1;
   border-radius: 24px;
   padding: 12px;
-  max-height: 360px;
-  justify-self: stretch;
 }
 
 /* ---------- why choose ---------- */
@@ -1185,6 +1306,16 @@
 
 /* ---------- tablets ---------- */
 @media (max-width: 1023px) {
+  /* real-life photos: the large one on top, the two small squares side by side below it */
+  .life-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .life-main {
+    grid-row: auto;
+    grid-column: 1 / -1;
+    min-height: 0;
+    aspect-ratio: 4 / 3;
+  }
   .trust-grid,
   .cat-grid,
   .num-cards,
@@ -1246,6 +1377,16 @@
     min-height: auto;
     justify-content: flex-start;
     padding: 108px 0 84px;
+    /* the product sits under the text on a phone, so the glow moves down behind it */
+    background:
+      radial-gradient(ellipse 90% 34% at 50% 82%, rgba(21, 151, 166, 0.17), transparent 72%),
+      radial-gradient(ellipse 80% 30% at 0% 0%, rgba(58, 123, 198, 0.09), transparent 70%),
+      linear-gradient(180deg, #fbfaf8 0%, var(--canvas) 100%);
+  }
+  [data-theme='dark'] .hero {
+    background:
+      radial-gradient(ellipse 90% 34% at 50% 82%, rgba(21, 151, 166, 0.22), transparent 72%),
+      var(--canvas);
   }
   .hero-inner {
     order: 1;
@@ -1259,9 +1400,8 @@
     order: 2;
     right: auto;
     top: auto;
-    width: min(84vw, 380px);
+    width: min(90vw, 420px);
     margin: 36px auto 0;
-    transform: none;
   }
   .hero-plug,
   .hero-plug-page {
@@ -1269,6 +1409,29 @@
     top: 98px;
     width: 20px;
     height: 20px;
+  }
+  /* the photograph sits under the buttons, full width, fading in at the top and out at the bottom */
+  .hero.has-photo {
+    padding-bottom: 0;
+  }
+  .hero-photo {
+    position: relative;
+    order: 2;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    margin-top: 28px;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 84%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 84%, transparent 100%);
+  }
+  .hero-photo .photo {
+    object-position: 58% 25%;
+  }
+  .hero.has-photo .hero-plug {
+    left: calc(100% - 24px);
+    top: calc(100% - 10px);
   }
   .hero-h1 {
     font-size: max(32px, 9.4vw);
@@ -1347,8 +1510,21 @@
   .cat-media {
     aspect-ratio: 16 / 11;
   }
-  .featured-grid {
+  .featured-grid,
+  .featured-card {
     grid-template-columns: 1fr;
+  }
+  .featured-card {
+    padding: 28px 22px 24px;
+    gap: 20px;
+    background:
+      radial-gradient(ellipse 90% 30% at 50% 86%, rgba(21, 151, 166, 0.26), transparent 72%),
+      var(--inverse);
+  }
+  .featured-visual {
+    width: 100%;
+    max-width: 420px;
+    justify-self: center;
   }
   .featured-media {
     max-width: 440px;
@@ -1357,18 +1533,6 @@
   }
   .life-head {
     grid-template-columns: 1fr;
-  }
-  .life-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-  .life-main {
-    grid-row: auto;
-    grid-column: 1 / -1;
-    min-height: 0;
-    aspect-ratio: 4 / 3;
-  }
-  .life-round {
-    width: 100%;
   }
   .life-side {
     padding: 6px;

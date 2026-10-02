@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { site } from './content';
+import { syncThemeColor } from './lib/theme';
 import Cursor from './components/Cursor';
 import Footer from './components/Footer';
 import Header from './components/Header';
@@ -46,6 +47,7 @@ function useRouteChrome() {
     const meta = META[pathname] ?? { title: `Page not found | ${site.name}`, description: HOME_DESCRIPTION };
     document.title = meta.title;
     document.querySelector('meta[name="description"]')?.setAttribute('content', meta.description);
+    syncThemeColor();
     if (hash) document.getElementById(decodeURIComponent(hash.slice(1)))?.scrollIntoView();
     else window.scrollTo(0, 0);
   }, [pathname, hash]);

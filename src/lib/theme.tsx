@@ -13,6 +13,13 @@ function readStored(): Theme {
   }
 }
 
+/** Colour of the browser's own chrome (e.g. a phone's address bar): matches the green
+    navigation bar that sits at the top of every page, so the two read as one surface. */
+export function syncThemeColor() {
+  const dark = document.documentElement.dataset.theme === 'dark';
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark ? '#0b3d1a' : '#02791c');
+}
+
 const ThemeContext = createContext<{ theme: Theme; toggle: () => void }>({ theme: 'light', toggle: () => {} });
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
@@ -20,7 +27,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#0f161e' : '#0c141d');
+    syncThemeColor();
     try {
       localStorage.setItem(KEY, theme);
     } catch {

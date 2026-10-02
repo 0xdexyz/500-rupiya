@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#0c141d" />
+    <meta name="theme-color" content="#02791c" />
     <title>Hearing Sensitivity | Hearing Care &amp; Hearing Aids</title>
     <meta
       name="description"
@@ -17,13 +17,23 @@
       content="Explore personalised hearing care, hearing assessments, hearing-aid consultation, fitting and modern hearing solutions at Hearing Sensitivity."
     />
     <meta property="og:image" content="/images/phonak-infinio-charging-case.jpg" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="preload" as="image" href="/images/phonak-infinio-ultra-ric.jpg" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <script>
       // apply the saved theme before first paint so dark mode does not flash
       try {
         if (localStorage.getItem('hs.theme') === 'dark') document.documentElement.dataset.theme = 'dark';
       } catch (e) {}
+      // the home page's hero photograph is the largest thing on screen, so start fetching it early
+      if (location.pathname === '/') {
+        var hero = document.createElement('link');
+        hero.rel = 'preload';
+        hero.as = 'image';
+        hero.href = '/images/hero-hearing-aid-wearer.jpg';
+        document.head.appendChild(hero);
+      }
     </script>
   </head>
   <body>

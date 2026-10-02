@@ -69,13 +69,15 @@ export default function Spine() {
       const endEl = page.querySelector('[data-spine="end"]');
       if (!startEl || !endEl) return setGeo(null);
       const narrow = origin.width < NARROW;
+      const ring = narrow ? 9 : 40;
       const start = centre(startEl, origin);
       const turns = [...page.querySelectorAll('[data-spine="turn"]')]
         .map((el) => centre(el, origin))
         .filter((t) => t.y > start.y)
         .sort((a, b) => a.y - b.y);
       const endY = centre(endEl, origin).y;
-      const { d, endX } = route(start, turns, endY, narrow ? 16 : 32);
+      // the cable leaves from the bottom of the ring, not its centre
+      const { d, endX } = route({ x: start.x, y: start.y + ring }, turns, endY, narrow ? 16 : 32);
       const inv = page.querySelector('[data-spine-invert]');
       const invertY = inv ? inv.getBoundingClientRect().top - origin.top : origin.height + 10;
       setGeo({
@@ -86,7 +88,7 @@ export default function Spine() {
         end: { x: endX, y: endY },
         invertY,
         stroke: narrow ? 5 : 16,
-        ring: narrow ? 9 : 40,
+        ring,
       });
     };
     const schedule = () => {

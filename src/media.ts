@@ -5,6 +5,7 @@
      photo  → a lifestyle photograph, cropped with object-fit: cover */
 
 export type MediaId =
+  | 'heroWearer'
   | 'infinioUltraRic'
   | 'infinioUltraIte'
   | 'held'
@@ -27,6 +28,14 @@ export interface MediaItem {
 }
 
 export const media: Record<MediaId, MediaItem> = {
+  /* Cropped from the home-page mockup the user supplied (2026-10-02). A larger original would be sharper. */
+  heroWearer: {
+    src: '/images/hero-hearing-aid-wearer.jpg',
+    alt: 'A smiling man touching the hearing aid behind his ear in a hearing clinic',
+    w: 871,
+    h: 807,
+    bg: 'photo',
+  },
   infinioUltraRic: {
     src: '/images/phonak-infinio-ultra-ric.jpg',
     alt: 'Phonak Infinio Ultra receiver-in-canal hearing aids',
@@ -57,7 +66,7 @@ export const media: Record<MediaId, MediaItem> = {
   },
   signiaBlack: {
     src: '/images/signia-ric-black.jpg',
-    alt: 'Signia receiver-in-canal hearing aids, with a woman wearing a hearing aid',
+    alt: 'A woman in profile wearing a receiver-in-canal hearing aid, with a pair of Signia hearing aids beside her',
     w: 1000,
     h: 1000,
     bg: 'white',

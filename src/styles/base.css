@@ -43,6 +43,15 @@
   --shadow-soft: 0 1px 2px rgba(20, 32, 48, 0.04), 0 10px 30px -16px rgba(20, 32, 48, 0.16);
   --shadow-lift: 0 2px 6px rgba(20, 32, 48, 0.05), 0 26px 48px -22px rgba(20, 32, 48, 0.3);
 
+  /* the logo's greens: its fill, its highlight and its rim */
+  --brand: #0db634;
+  --brand-bright: #37dc5f;
+  --brand-deep: #017701;
+  /* navigation bar: the logo's rim green, deep enough for white text (4.8:1 or better) */
+  --bar: linear-gradient(90deg, #016c12 0%, #02791c 55%, #058524 100%);
+  --bar-solid: #02791c;
+  --bar-h: 84px;
+
   --margin: clamp(20px, 4vw, 64px);
   --gutter: clamp(12px, 1.7vw, 24px);
   --book-w: 210px;
@@ -63,6 +72,8 @@
   --inverse: #080d13;
   --inverse-card: #131c26;
   --link: #6fcdd7;
+  --bar: linear-gradient(90deg, #0a3517 0%, #0b3d1a 55%, #0e4a20 100%);
+  --bar-solid: #0b3d1a;
   --shadow-soft: none;
   --shadow-lift: 0 24px 48px -20px rgba(0, 0, 0, 0.65);
   color-scheme: dark;
@@ -174,7 +185,6 @@ svg {
   padding-block: clamp(96px, 12vw, 160px);
 }
 [data-tone='dark'].section,
-.hero[data-tone='dark'],
 .page-hero,
 .footer {
   background: var(--inverse);
@@ -204,14 +214,24 @@ svg {
 .fit-cover {
   object-fit: cover;
 }
-/* black-background product shots melt into the dark surface behind them */
+/* Product shots with a plain background melt into the surface behind them: black ones are
+   screened onto dark surfaces, white ones multiplied onto light surfaces. The surface must
+   be painted in the same stacking context as the image (no transform or opacity on an
+   ancestor in between), or the blend has nothing to blend with. */
 .blend-screen {
   mix-blend-mode: screen;
+}
+.blend-multiply {
+  mix-blend-mode: multiply;
 }
 .plinth {
   position: relative;
   z-index: 2;
   display: grid;
+  /* One track exactly as big as the card. Without it the track grows to the photo's own height
+     (the photo's `height: 100%` has nothing definite to measure), the photo overflows the card,
+     and `overflow: hidden` cuts its bottom off. */
+  grid-template: minmax(0, 1fr) / minmax(0, 1fr);
   place-items: center;
   overflow: hidden;
   background: var(--plinth);
@@ -464,15 +484,14 @@ mark.hl {
   height: 0;
   pointer-events: none;
 }
+/* an open ring: the cable leaves from its bottom edge, so it needs no fill to hide the line's
+   start and works on any background */
 .spine-ring {
-  fill: var(--canvas);
+  fill: none;
   stroke: var(--accent);
   transform-box: fill-box;
   transform-origin: center;
   animation: ring-in 0.8s var(--ease-out) both;
-}
-.page:has(> section:first-of-type[data-tone='dark']) .spine-ring {
-  fill: var(--inverse);
 }
 .spine-plug {
   fill: var(--accent);
@@ -522,24 +541,22 @@ html.has-dot * {
   transform: scale(2.4);
 }
 
-/* ---------- masthead, fixed buttons & menu ---------- */
+/* ---------- navigation bar (green, matching the logo), fixed buttons & menu ---------- */
 .masthead {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 40;
+  z-index: 50;
   display: flex;
   align-items: center;
   gap: clamp(16px, 2.2vw, 36px);
-  height: 84px;
+  height: var(--bar-h);
   padding: 0 calc(var(--margin) + 48px + 12px + var(--book-w) + 20px) 0 var(--margin);
-  color: var(--on-inverse);
-  pointer-events: none;
-  --social-bg: var(--inverse);
-}
-.masthead > * {
-  pointer-events: auto;
+  background: var(--bar);
+  color: #fff;
+  box-shadow: 0 10px 30px -18px rgba(1, 60, 14, 0.55);
+  --social-bg: var(--bar-solid);
 }
 .masthead-logo {
   display: inline-block;
@@ -552,14 +569,14 @@ html.has-dot * {
   gap: clamp(14px, 1.5vw, 26px);
   margin-left: auto;
 }
+/* solid white: faded white falls below readable contrast on the lighter end of the bar */
 .masthead-link {
   position: relative;
   padding: 6px 0;
   font-size: 15px;
   font-weight: 500;
+  color: #fff;
   text-decoration: none;
-  opacity: 0.8;
-  transition: opacity 0.25s;
 }
 .masthead-link::after {
   content: '';
@@ -569,18 +586,17 @@ html.has-dot * {
   bottom: 0;
   height: 2px;
   border-radius: 2px;
-  background: var(--accent);
+  background: var(--brand-bright);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.4s var(--ease-out);
 }
-.masthead-link:hover,
-.masthead-link.active {
-  opacity: 1;
-}
 .masthead-link:hover::after,
 .masthead-link.active::after {
   transform: none;
+}
+.masthead-link.active {
+  font-weight: 600;
 }
 .masthead-social {
   margin-left: auto;
@@ -588,6 +604,20 @@ html.has-dot * {
 .masthead-social a {
   width: 38px;
   height: 38px;
+  border-color: rgba(255, 255, 255, 0.55);
+}
+.masthead .socials a:hover {
+  --icon-cut: #fff;
+  background: #fff;
+  border-color: #fff;
+  color: var(--brand-deep);
+}
+/* focus rings in white, so they show against the green */
+.masthead :focus-visible,
+.book-btn:focus-visible,
+.call-btn:focus-visible,
+.menu-btn:focus-visible {
+  outline-color: #fff;
 }
 @media (min-width: 1360px) {
   .masthead-nav {
@@ -605,6 +635,9 @@ html.has-dot * {
 }
 .logo-mark {
   flex: none;
+  display: block;
+  width: 40px;
+  height: 40px;
 }
 .logo-word {
   font-size: 15px;
@@ -614,9 +647,10 @@ html.has-dot * {
   white-space: nowrap;
 }
 
+/* The fixed buttons sit on the bar, centred in its height, and stay put as the page scrolls. */
 .book-btn {
   position: fixed;
-  top: 18px;
+  top: calc((var(--bar-h) - 48px) / 2);
   right: calc(var(--margin) + 48px + 12px);
   z-index: 70;
   width: var(--book-w);
@@ -629,24 +663,19 @@ html.has-dot * {
   font-size: 15px;
   font-weight: 600;
   text-decoration: none;
-  background: var(--stone-900);
-  color: var(--stone-50);
-  transition: background-color 0.35s ease, color 0.35s ease, transform 0.3s var(--ease-out);
-}
-.book-btn[data-tone='dark'],
-[data-theme='dark'] .book-btn[data-tone='light'] {
-  background: var(--stone-50);
-  color: var(--stone-900);
-}
-.book-btn[data-tone='accent'] {
   background: #fff;
-  color: var(--accent-deep);
+  color: var(--brand-deep);
+  box-shadow: 0 6px 18px -10px rgba(0, 40, 10, 0.6);
+  transition: background-color 0.3s ease, transform 0.3s var(--ease-out);
+}
+.book-btn:hover {
+  background: #effbf1;
 }
 .book-btn:active {
   transform: scale(0.96);
 }
 .book-btn .icon {
-  color: var(--accent);
+  color: var(--brand);
 }
 @media (min-width: 900px) {
   .book-btn {
@@ -654,42 +683,11 @@ html.has-dot * {
   }
 }
 
-.call-btn {
-  position: fixed;
-  top: 18px;
-  right: calc(var(--margin) + 48px + 10px);
-  z-index: 70;
-  width: 48px;
-  height: 48px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  border: 1.5px solid currentColor;
-  background: var(--canvas);
-  color: var(--ink);
-  transition: color 0.35s ease, background-color 0.35s ease, transform 0.3s var(--ease-out);
-}
-.call-btn[data-tone='dark'] {
-  color: var(--stone-100);
-  background: var(--inverse);
-}
-.call-btn[data-tone='accent'] {
-  color: #fff;
-  background: var(--accent-deep);
-}
-.call-btn:active {
-  transform: scale(0.94);
-}
-@media (min-width: 900px) {
-  .call-btn {
-    display: none;
-  }
-}
-
+/* round white-outlined buttons on the bar: call (phones and tablets) and menu */
+.call-btn,
 .menu-btn {
   position: fixed;
-  top: 18px;
-  right: var(--margin);
+  top: calc((var(--bar-h) - 48px) / 2);
   z-index: 70;
   width: 48px;
   height: 48px;
@@ -697,21 +695,29 @@ html.has-dot * {
   place-items: center;
   padding: 0;
   border-radius: 50%;
-  border: 1.5px solid currentColor;
-  background: var(--canvas);
-  color: var(--ink);
-  transition: color 0.35s ease, background-color 0.35s ease, transform 0.3s var(--ease-out);
-}
-.menu-btn[data-tone='dark'] {
-  color: var(--stone-100);
-  background: var(--inverse);
-}
-.menu-btn[data-tone='accent'] {
+  border: 1.5px solid rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.06);
   color: #fff;
-  background: var(--accent-deep);
+  transition: background-color 0.3s ease, transform 0.3s var(--ease-out);
 }
+.call-btn {
+  right: calc(var(--margin) + 48px + 10px);
+}
+.menu-btn {
+  right: var(--margin);
+}
+.call-btn:hover,
+.menu-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+.call-btn:active,
 .menu-btn:active {
   transform: scale(0.94);
+}
+@media (min-width: 900px) {
+  .call-btn {
+    display: none;
+  }
 }
 .menu-btn-lines {
   position: relative;
@@ -849,6 +855,9 @@ html.has-dot * {
 .menu-phones {
   display: grid;
   gap: 4px;
+}
+.menu-phones a {
+  white-space: nowrap; /* a phone number never breaks across lines */
 }
 .menu-phones .is-main {
   font-size: 17px;
@@ -1028,12 +1037,13 @@ html.has-dot * {
     left: var(--x-sm, calc(100% - 14px));
     top: var(--y-sm, var(--y));
   }
+  :root {
+    --bar-h: 76px;
+  }
   .masthead {
-    height: 76px;
     padding-right: 128px;
   }
   .call-btn {
-    top: 14px;
     right: 70px;
   }
   .masthead-social {
@@ -1044,14 +1054,11 @@ html.has-dot * {
     letter-spacing: 0.08em;
   }
   .logo-mark {
-    width: 26px;
-    height: 26px;
+    width: 34px;
+    height: 34px;
   }
   .menu-btn {
-    top: 14px;
     right: 14px;
-    width: 48px;
-    height: 48px;
   }
   .menu-nav {
     padding-block: 28px;
@@ -1085,6 +1092,26 @@ html.has-dot * {
     min-height: 54px;
     padding: 0 24px;
     font-size: 16.5px;
+  }
+}
+
+/* Very small phones: the two-column menu footer is too narrow for a phone number, so the
+   numbers get a full-width row. */
+@media (max-width: 359px) {
+  .menu-foot > .menu-call {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Small phones: the call and menu buttons share the top row with the logo, so the name stacks
+   onto two lines beside the badge instead of running wide. */
+@media (max-width: 399px) {
+  .masthead .logo-word,
+  .menu-top .logo-word {
+    width: min-content;
+    white-space: normal;
+    font-size: 12.5px;
+    line-height: 1.15;
   }
 }
 

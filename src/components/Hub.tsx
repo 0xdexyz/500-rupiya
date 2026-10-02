@@ -103,7 +103,7 @@ export default function Hub({ source, targets }: { source: string; targets: { la
       </div>
       <div className="hub-mid" aria-hidden="true">
         <span ref={hubRef} className="hub-node node-hub">
-          <LogoMark size={34} />
+          <LogoMark size={80} />
         </span>
       </div>
       <ul className="hub-targets" aria-hidden="true">
