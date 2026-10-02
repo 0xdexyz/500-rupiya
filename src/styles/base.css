@@ -12,9 +12,9 @@
   --stone-900: #142030;
 
   /* healthcare accents, used sparingly */
-  --accent: #1597a6;
-  --accent-deep: #0b6873;
-  --accent-soft: #c6e9ec;
+  --accent: #0db634;
+  --accent-deep: #02791c;
+  --accent-soft: #cdeed5;
   --blue: #3a7bc6;
   --slate: #5b6b80;
   --slate-light: #9aa9bb;
@@ -79,7 +79,7 @@
   --tone-slate: #2d3a4a;
   --tone-ocean: #173f5d;
   --tone-ink: #1d3325;
-  --link: #6fcdd7;
+  --link: #6fe08c;
   --bar: linear-gradient(90deg, #0a3517 0%, #0b3d1a 55%, #0e4a20 100%);
   --bar-solid: #0b3d1a;
   --shadow-soft: none;

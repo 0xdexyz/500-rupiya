@@ -9,13 +9,13 @@
   padding: 120px 0 104px;
   /* soft teal light behind the product and a cool wash in the top corner, fading into the page */
   background:
-    radial-gradient(ellipse 54% 66% at 76% 46%, rgba(21, 151, 166, 0.17), transparent 72%),
+    radial-gradient(ellipse 54% 66% at 76% 46%, rgba(13, 182, 52, 0.17), transparent 72%),
     radial-gradient(ellipse 46% 52% at 4% 0%, rgba(58, 123, 198, 0.09), transparent 70%),
     linear-gradient(180deg, #fbfaf8 0%, var(--canvas) 100%);
 }
 [data-theme='dark'] .hero {
   background:
-    radial-gradient(ellipse 54% 66% at 76% 46%, rgba(21, 151, 166, 0.22), transparent 72%),
+    radial-gradient(ellipse 54% 66% at 76% 46%, rgba(13, 182, 52, 0.22), transparent 72%),
     var(--canvas);
 }
 .hero-inner {
@@ -269,7 +269,7 @@
   margin-bottom: 10px;
 }
 [data-theme='dark'] .icon-badge {
-  background: rgba(21, 151, 166, 0.18);
+  background: rgba(13, 182, 52, 0.18);
   color: var(--brand-deep);
 }
 
@@ -1259,7 +1259,7 @@
 .field textarea:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 4px rgba(21, 151, 166, 0.2);
+  box-shadow: 0 0 0 4px rgba(13, 182, 52, 0.2);
 }
 .field [aria-invalid='true'] {
   border-color: #c2412d;
@@ -1389,13 +1389,13 @@
     padding: 108px 0 84px;
     /* the product sits under the text on a phone, so the glow moves down behind it */
     background:
-      radial-gradient(ellipse 90% 34% at 50% 82%, rgba(21, 151, 166, 0.17), transparent 72%),
+      radial-gradient(ellipse 90% 34% at 50% 82%, rgba(13, 182, 52, 0.17), transparent 72%),
       radial-gradient(ellipse 80% 30% at 0% 0%, rgba(58, 123, 198, 0.09), transparent 70%),
       linear-gradient(180deg, #fbfaf8 0%, var(--canvas) 100%);
   }
   [data-theme='dark'] .hero {
     background:
-      radial-gradient(ellipse 90% 34% at 50% 82%, rgba(21, 151, 166, 0.22), transparent 72%),
+      radial-gradient(ellipse 90% 34% at 50% 82%, rgba(13, 182, 52, 0.22), transparent 72%),
       var(--canvas);
   }
   .hero-inner {
