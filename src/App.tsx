@@ -14,7 +14,12 @@ import Services from './pages/Services';
 import { NotFound, Privacy } from './pages/Simple';
 
 const HOME_DESCRIPTION =
-  'Explore personalised hearing care, hearing assessments, hearing-aid consultation, fitting and modern hearing solutions at Hearing Sensitivity.';
+  'Hearing Sensitivity provides personalised hearing care, hearing tests and hearing aid solutions tailored to your individual needs.';
+
+const SITE_URL = 'https://hearingsensitivity.site';
+
+/** Point a <meta>/<link> tag in index.html at the current page. */
+const setHead = (selector: string, attr: string, value: string) => document.querySelector(selector)?.setAttribute(attr, value);
 
 const META: Record<string, { title: string; description: string }> = {
   '/': { title: `${site.name} | Hearing Care & Hearing Aids`, description: HOME_DESCRIPTION },
@@ -46,7 +51,14 @@ function useRouteChrome() {
   useEffect(() => {
     const meta = META[pathname] ?? { title: `Page not found | ${site.name}`, description: HOME_DESCRIPTION };
     document.title = meta.title;
-    document.querySelector('meta[name="description"]')?.setAttribute('content', meta.description);
+    const url = SITE_URL + pathname;
+    setHead('meta[name="description"]', 'content', meta.description);
+    setHead('link[rel="canonical"]', 'href', url);
+    setHead('meta[property="og:url"]', 'content', url);
+    setHead('meta[property="og:title"]', 'content', meta.title);
+    setHead('meta[property="og:description"]', 'content', meta.description);
+    setHead('meta[name="twitter:title"]', 'content', meta.title);
+    setHead('meta[name="twitter:description"]', 'content', meta.description);
     syncThemeColor();
     if (hash) document.getElementById(decodeURIComponent(hash.slice(1)))?.scrollIntoView();
     else window.scrollTo(0, 0);
